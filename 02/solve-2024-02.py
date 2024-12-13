@@ -32,14 +32,34 @@ def parse_input(fl: str) -> list:
 	return utils.read_file_into_lists_of_ints(fl, ' ')
 
 
-def count_distances(inlist: list) -> list:
-	"""Count numerical distances between items of list.
+def calculate_distances(inlist: list) -> list:
+	"""Calculate numerical distances between items of list.
 	Returning list is one item shorter than provided one.
 	"""
 	dists = []
 	for i in range(len(inlist) - 1):
 		dists.append(inlist[i + 1] - inlist[i])
 	return dists
+
+
+def report_is_safe(report: list) -> bool:
+	dists = calculate_distances(report)
+	# ~ print('dists:', dists)
+
+	dd = (min(dists), max(dists))
+	# ~ print({'dd': dd, 'madd': max(dd), 'midd': min(dd)})
+	isIncr = min(dd) > 0		# exclusively increasing
+	isDecr = max(dd) < 0		# exclusively decreasing
+	# ~ print({'isIncr': isIncr, 'isDecr': isDecr})
+	add = (abs(dd[0]), abs(dd[1]))
+	# ~ print({'add': add, 'maadd': max(add), 'miadd': min(add)})
+
+	if (isIncr or isDecr) and min(add) >= 1 and max(add) <= 3:
+		# ~ print('SAFE', report)
+		return True
+	else:
+		# ~ print('UNSAFE', report)
+		return False
 
 
 def solve_part_1(demo: int = 0) -> str:
@@ -53,24 +73,8 @@ def solve_part_1(demo: int = 0) -> str:
 
 	nSafe = 0
 	for report in reports:
-		dists = count_distances(report)
-		# ~ print('dists:', dists)
-
-		dd = (min(dists), max(dists))
-		# ~ print({'dd': dd, 'madd': max(dd), 'midd': min(dd)})
-		isIncr = min(dd) > 0		# exclusively increasing
-		isDecr = max(dd) < 0		# exclusively decreasing
-		# ~ print({'isIncr': isIncr, 'isDecr': isDecr})
-		add = (abs(dd[0]), abs(dd[1]))
-		# ~ print({'add': add, 'maadd': max(add), 'miadd': min(add)})
-
-		if (isIncr or isDecr) and min(add) >= 1 and max(add) <= 3:
-			# ~ print('SAFE', report)
+		if report_is_safe(report):
 			nSafe += 1
-		else:
-			# ~ print('UNSAFE', report)
-			pass
-		# ~ print()
 
 	answer = nSafe
 
@@ -85,9 +89,28 @@ def solve_part_2(demo: int = 0) -> str:
 	fl, fn = get_file(demo)
 	"""Do something here for PART 2 >>>"""
 
-	parse_input(fl)
+	reports = parse_input(fl)
+	# ~ dump_list_of(reports)
 
-	answer = None
+	nSafe = 0
+	for report in reports:
+		if report_is_safe(report):
+			nSafe += 1
+		else:
+			# ~ print('UNSAFE BUT... TODO')
+			for i in range(len(report)):
+				subrep = report.copy()
+				del(subrep[i])
+				if report_is_safe(subrep):
+					# ~ print('SAFE (sub)', subrep)
+					nSafe += 1
+					break
+				else:
+					# ~ print('UNSAFE (sub)', subrep)
+					pass
+
+
+	answer = nSafe
 
 	"""<<< Do something here for PART 2"""
 	utils.print_answer(2, demo, answer)
@@ -96,9 +119,9 @@ def solve_part_2(demo: int = 0) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
 
 	pass
 
