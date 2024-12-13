@@ -5,7 +5,7 @@ Advent of Code 2024
  "*" solved part 1
  "**" solved part 2
 
-- 01
+- 01 *
 - 02
 - 03
 - 04
