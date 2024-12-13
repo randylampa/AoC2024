@@ -7,7 +7,7 @@
 
 import sys
 import os
-# ~ import re
+import re
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.dirname(cur_dir))
 import utils
@@ -28,9 +28,11 @@ def get_file(demo: int = 0) -> tuple:
 	return (fl, fn)
 
 
-def parse_input(fl: str):
-
-	return None
+def parse_input(fl: str) -> str:
+	f = open(fl, 'r')
+	content = f.read()
+	f.close()
+	return content
 
 
 def solve_part_1(demo: int = 0) -> str:
@@ -39,9 +41,17 @@ def solve_part_1(demo: int = 0) -> str:
 	fl, fn = get_file(demo)
 	"""Do something here for PART 1 >>>"""
 
-	parse_input(fl)
+	content = parse_input(fl)
 
-	answer = None
+	instrs = re.findall('(mul)\\((\\d+),(\\d+)\\)', content)
+	dump_list_of(instrs)
+
+	nums = []
+	for ins in instrs:
+		nums.append(int(ins[1]) * int(ins[2]))
+	print(nums)
+
+	answer = sum(nums)
 
 	"""<<< Do something here for PART 1"""
 	utils.print_answer(1, demo, answer)
@@ -65,9 +75,9 @@ def solve_part_2(demo: int = 0) -> str:
 
 def main():
 
-	solve_part_1(1)
+	solve_part_1(0)
 
-	solve_part_2(1)
+	# ~ solve_part_2(1)
 
 	pass
 
