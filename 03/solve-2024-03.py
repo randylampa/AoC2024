@@ -64,9 +64,30 @@ def solve_part_2(demo: int = 0) -> str:
 	fl, fn = get_file(demo)
 	"""Do something here for PART 2 >>>"""
 
-	parse_input(fl)
+	content = parse_input(fl)
 
-	answer = None
+	instrs = re.findall('(?:(do(?:n\'t)?)\\(\\))|(?:(mul)\\((\\d+),(\\d+)\\))', content)
+	dump_list_of(instrs)
+
+	nums = []
+	do = True
+	for ins in instrs:
+		inm = ins[0] if ins[0] else ins[1]
+		# ~ print(inm)
+		if False:
+			pass
+		elif inm == "do":
+			do = True
+		elif inm == "don't":
+			do = False
+		elif do and inm == "mul":
+			o1 = int(ins[2])
+			o2 = int(ins[3])
+			# ~ print(inm, o1, o2)
+			nums.append(o1 * o2)
+	print(nums)
+
+	answer = sum(nums)
 
 	"""<<< Do something here for PART 2"""
 	utils.print_answer(2, demo, answer)
@@ -75,9 +96,9 @@ def solve_part_2(demo: int = 0) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	solve_part_2(0) # 2 for demo!
 
 	pass
 
