@@ -66,7 +66,7 @@ def solve_part_2(demo: int = 0) -> str:
 
 	content = parse_input(fl)
 
-	instrs = re.findall('(?:(do(?:n\'t)?)\\(\\))|(?:(mul)\\((\\d+),(\\d+)\\))', content)
+	instrs = re.findall("(?:(do(?:n't)?)\\(\\))|(?:(mul)\\((\\d+),(\\d+)\\))", content)
 	dump_list_of(instrs)
 
 	nums = []
@@ -97,10 +97,16 @@ def solve_part_2(demo: int = 0) -> str:
 def main():
 
 	# ~ solve_part_1(0)
+	print(utils.test_answers({
+		# ~ 1: 161,
+		# ~ 0: 173529487,
+	}, solve_part_1))
 
-	solve_part_2(0) # 2 for demo!
-
-	pass
+	# ~ solve_part_2(0)  # 2 for demo!
+	print(utils.test_answers({
+		# ~ 2: 48,
+		0: 99532691,
+	}, solve_part_2))
 
 
 if __name__ == '__main__':
