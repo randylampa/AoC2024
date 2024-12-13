@@ -11,20 +11,34 @@ import os
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.dirname(cur_dir))
 import utils
+from utils import dump_list_of
 
 YEAR = $YEAR
 DAY = $DAY
 ISSUE = '$ISSUE'
 
 
-def solve_part_1(demo: int = 0) -> str:
-	"""SOLVE PART 1
+def get_file(demo: int = 0) -> tuple:
+	"""Returns (filePath, fileName)
 	"""
 	fn = utils.get_input_file(demo, DAY, YEAR)
 	print({"Using input file": fn})
 	fl = cur_dir + '/' + fn
 	# ~ print(fl)
+	return (fl, fn)
+
+
+def parse_input(fl: str):
+	return None
+
+
+def solve_part_1(demo: int = 0) -> str:
+	"""SOLVE PART 1
+	"""
+	fl, fn = get_file(demo)
 	"""Do something here for PART 1 >>>"""
+
+	parse_input(fl)
 
 	answer = None
 
@@ -36,11 +50,10 @@ def solve_part_1(demo: int = 0) -> str:
 def solve_part_2(demo: int = 0) -> str:
 	"""SOLVE PART 2
 	"""
-	fn = utils.get_input_file(demo, DAY, YEAR)
-	print({"Using input file": fn})
-	fl = cur_dir + '/' + fn
-	# ~ print(fl)
+	fl, fn = get_file(demo)
 	"""Do something here for PART 2 >>>"""
+
+	parse_input(fl)
 
 	answer = None
 
