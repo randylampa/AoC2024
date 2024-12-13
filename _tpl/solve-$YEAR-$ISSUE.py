@@ -7,50 +7,47 @@
 
 import sys
 import os
+# ~ import re
 cur_dir = os.path.dirname(os.path.realpath(__file__))
-par_dir = os.path.dirname(cur_dir)
-sys.path.append(par_dir)
+sys.path.append(os.path.dirname(cur_dir))
 import utils
-import re
 
 YEAR = $YEAR
 DAY = $DAY
 ISSUE = '$ISSUE'
 
 
-
-'''
-	SOLVE PART 1
-'''
-def solve_part_1(demo:bool) -> str:
-
-	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
-	print(fn)
+def solve_part_1(demo: int = 0) -> str:
+	"""SOLVE PART 1
+	"""
+	fn = utils.get_input_file(demo, DAY, YEAR)
+	print({"Using input file": fn})
 	fl = cur_dir + '/' + fn
-	"""Do something here >>>"""
+	# ~ print(fl)
+	"""Do something here for PART 1 >>>"""
 
 	answer = None
 
-	"""<<< Do something here"""
+	"""<<< Do something here for PART 1"""
 	utils.print_answer(1, demo, answer)
 	return answer
 
 
-'''
-	SOLVE PART 2
-'''
-def solve_part_2(demo:bool) -> str:
-
-	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
-	print(fn)
+def solve_part_2(demo: int = 0) -> str:
+	"""SOLVE PART 2
+	"""
+	fn = utils.get_input_file(demo, DAY, YEAR)
+	print({"Using input file": fn})
 	fl = cur_dir + '/' + fn
-	"""Do something here >>>"""
+	# ~ print(fl)
+	"""Do something here for PART 2 >>>"""
 
 	answer = None
 
-	"""<<< Do something here"""
+	"""<<< Do something here for PART 2"""
 	utils.print_answer(2, demo, answer)
 	return answer
+
 
 def main():
 
@@ -59,6 +56,7 @@ def main():
 	solve_part_2(1)
 
 	pass
+
 
 if __name__ == '__main__':
 	sys.exit(main())
