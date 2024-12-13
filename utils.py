@@ -72,12 +72,12 @@ def read_file_into_list_of_ints(name: str) -> list:
 	)
 
 
-def read_file_into_lists_of_ints(name: str) -> list:
+def read_file_into_lists_of_ints(name: str, sep: str = ',') -> list:
 	"""Read all lines into list of lists (sep=,)
 	"""
 	return read_file_into_list(
 		name,
-		lambda x: [*map(int, x.strip().split(','))],
+		lambda x: [*map(int, x.strip().split(sep))],
 	)
 
 
