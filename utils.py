@@ -106,6 +106,23 @@ def print_answer(part: int, demo: bool, answer) -> None:
 	print("Answer_{} = {}{}".format(part, answer, ' (demo)' if demo else ''))
 
 
+def test_answers(expect: dict, runner) -> bool:
+	"""Test expected answers for different inputs
+	expect {demoN: answer, ..}
+	runner solve_part_N
+	"""
+	allmet = True
+	for itm in expect.items():
+		ret = runner(itm[0])
+		if ret == itm[1]:
+			print('EXPECTATION MET')
+			allmet &= True
+		else:
+			print('EXPECTATION UNMET!')
+			allmet &= False
+	return allmet
+
+
 def main(args):
 	return 0
 
