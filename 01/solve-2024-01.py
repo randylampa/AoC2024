@@ -43,7 +43,6 @@ def solve_part_1(demo: int = 0) -> str:
 	listL, listR = parse_input(fl)
 	# ~ print(listL)
 	# ~ print(listR)
-
 	listL.sort()
 	listR.sort()
 	# ~ print(listL)
@@ -70,7 +69,16 @@ def solve_part_2(demo: int = 0) -> str:
 	# ~ print(fl)
 	"""Do something here for PART 2 >>>"""
 
-	answer = None
+	listL, listR = parse_input(fl)
+	print('listL =', listL)
+	print('listR =', listR)
+
+	scores = []
+	for nL in listL:
+		scores.append(nL * listR.count(nL))
+	print(scores)
+
+	answer = sum(scores)
 
 	"""<<< Do something here for PART 2"""
 	utils.print_answer(2, demo, answer)
@@ -79,9 +87,9 @@ def solve_part_2(demo: int = 0) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
 
 	pass
 
