@@ -8,25 +8,38 @@ import sys
 import re
 
 
+def get_demo_sufix(demo: int) -> str:
+	"""Returns filename suffix for demo
+
+	'demoN-' or ''
+	"""
+	if demo > 0:
+		return 'demo{}-'.format(str(demo))
+	return ''
+
+
 def get_input_file(demo: int, day: int, year: int) -> str:
-	syear = str(year)
-	sday = str(day).rjust(2, '0')
-	sdemo = 'demo{}-'.format(str(demo) if demo > 0 else '')
-	f = 'data-{}{}-{}'.format(sdemo if demo > 0 else '', syear, sday)
-	return f
+	"""Returns filename for INput data
+	"""
+	return 'data-{}{}-{}'.format(
+		get_demo_sufix(demo),
+		str(year),
+		str(day).rjust(2, '0'),
+	)
 
 
 def get_output_file(demo: int, day: int, year: int) -> str:
-	syear = str(year)
-	sday = str(day).rjust(2, '0')
-	sdemo = 'demo{}-'.format(str(demo) if demo > 0 else '')
-	f = 'outdata-{}{}-{}'.format(sdemo if demo > 0 else '', syear, sday)
-	return f
-
-
-def read_file_into_lines(name: str = 'input', mode: str = 'r') -> list:
+	"""Returns filename for OUTput data
 	"""
-	Reads all lines into list
+	return 'outdata-{}{}-{}'.format(
+		get_demo_sufix(demo),
+		str(year),
+		str(day).rjust(2, '0'),
+	)
+
+
+def read_file_into_lines(name: str, mode: str = 'r') -> list:
+	"""Reads all lines into list
 	"""
 	f = open(name, 'r')
 	lines = f.readlines()
@@ -34,16 +47,14 @@ def read_file_into_lines(name: str = 'input', mode: str = 'r') -> list:
 	return lines
 
 
-def read_file_into_list(name: str = 'input', mapfnc=lambda x: x.strip()) -> list:
-	"""
-	Reads all lines into list and map mapfnc on each.
+def read_file_into_list(name: str, mapfnc=lambda x: x.strip()) -> list:
+	"""Reads all lines into list and map mapfnc on each.
 	"""
 	return [*map(mapfnc, read_file_into_lines(name))]
 
 
-def read_file_into_list_bin(name: str = 'input', mapfnc=None) -> list:
-	"""
-	Reads all lines into list and map mapfnc on each.
+def read_file_into_list_bin(name: str, mapfnc=None) -> list:
+	"""Reads all lines into list and map mapfnc on each.
 	"""
 	lines = read_file_into_lines(name, 'rb')
 	if mapfnc is not None:
@@ -52,23 +63,30 @@ def read_file_into_list_bin(name: str = 'input', mapfnc=None) -> list:
 		return lines
 
 
-def read_file_into_list_of_ints(name: str = 'input') -> list:
+def read_file_into_list_of_ints(name: str) -> list:
+	"""Reads all lines into list and map int(x.strip()) on each.
 	"""
-	Reads all lines into list and map int(x.strip()) on each.
-	"""
-	return read_file_into_list(name, lambda x: int(x.strip()))
+	return read_file_into_list(
+		name,
+		lambda x: int(x.strip()),
+	)
 
 
-def read_file_into_lists_of_ints(name: str = 'input') -> list:
+def read_file_into_lists_of_ints(name: str) -> list:
+	"""Read all lines into list of lists (sep=,)
 	"""
-	Read all lines into list of lists (sep=,)
-	"""
-	return read_file_into_list(name, lambda x: [*map(int, x.strip().split(','))])
+	return read_file_into_list(
+		name,
+		lambda x: [*map(int, x.strip().split(','))],
+	)
 
 
-def read_file_into_dict(name: str = 'input', kvpattrn: str = '(?P<k>.*):\\s*(?P<v>.*)', vmap=int) -> dict:
-	"""
-	Reads all lines into dict and maps vmap on each value
+def read_file_into_dict(
+	name: str,
+	kvpattrn: str = '(?P<k>.*):\\s*(?P<v>.*)',
+	vmap=int,
+) -> dict:
+	"""Reads all lines into dict and maps vmap on each value
 	"""
 	outdict = {}
 	for line in read_file_into_lines(name):
@@ -84,7 +102,7 @@ def dump_list_of(xlist: list):
 		print(x)
 
 
-def print_answer(part: int, demo, answer) -> None:
+def print_answer(part: int, demo: bool, answer) -> None:
 	print("Answer_{} = {}{}".format(part, answer, ' (demo)' if demo else ''))
 
 
