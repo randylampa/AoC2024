@@ -1,0 +1,6 @@
+$YEAR	2024
+$DAY	3
+$ISSUE	03
+$URL	https://adventofcode.com/2024/day/3
+$URL_INPUT	https://adventofcode.com/2024/day/3/input
+$URL_ANSWER	https://adventofcode.com/2024/day/3/answer
