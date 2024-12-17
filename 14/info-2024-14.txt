@@ -1,0 +1,6 @@
+$URL_ANSWER	https://adventofcode.com/2024/day/14/answer
+$URL_INPUT	https://adventofcode.com/2024/day/14/input
+$DAY	14
+$YEAR	2024
+$ISSUE	14
+$URL	https://adventofcode.com/2024/day/14
