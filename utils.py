@@ -111,15 +111,21 @@ def test_answers(expect: dict, runner) -> bool:
 	expect {demoN: answer, ..}
 	runner solve_part_N
 	"""
+	results = {}
 	allmet = True
 	for itm in expect.items():
 		ret = runner(itm[0])
+		results[itm[0]] = {
+			'exp': itm[1],
+			'got': ret,
+		}
 		if ret == itm[1]:
 			print('EXPECTATION MET')
 			allmet &= True
 		else:
 			print('EXPECTATION UNMET!')
 			allmet &= False
+	print(results)
 	return allmet
 
 
