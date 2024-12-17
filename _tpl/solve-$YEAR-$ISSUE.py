@@ -65,18 +65,20 @@ def solve_part_2(demo: int = 0) -> str:
 def main():
 
 	# ~ solve_part_1(1)
-	print(utils.test_answers({
+	expect1 = {
 		1: None,
 		# ~ 2: None,
 		# ~ 0: None,
-	}, solve_part_1))
+	}
+	print(utils.test_answers(expect1, solve_part_1))
 
 	# ~ solve_part_2(1)
-	print(utils.test_answers({
+	expect2 = {
 		1: None,
 		# ~ 2: None,
 		# ~ 0: None,
-	}, solve_part_2))
+	}
+	print(utils.test_answers(expect2, solve_part_2))
 
 
 if __name__ == '__main__':
