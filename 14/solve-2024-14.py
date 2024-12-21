@@ -8,6 +8,7 @@
 import sys
 import os
 import re
+import time
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.dirname(cur_dir))
 import utils
@@ -30,7 +31,7 @@ def get_file(demo: int = 0) -> tuple:
 
 def parse_line(line: str) -> dict:
 	robot = {}
-	for m in re.finditer('(?P<var>\w)=(?P<x>-?\d+),(?P<y>-?\d+)', line):
+	for m in re.finditer('(?P<var>\\w)=(?P<x>-?\\d+),(?P<y>-?\\d+)', line):
 		gd = m.groupdict()
 		# ~ print(gd)
 		robot[gd['var']] = (int(gd['x']), int(gd['y']))
@@ -43,32 +44,50 @@ def parse_input(fl: str):
 	return robots
 
 
-playfield = None
+def move_robots(robots: list, xmax: int, ymax: int):
+	for robot in robots:
+		p = robot['p']
+		v = robot['v']
+		robot['p'] = ((p[0] + v[0]) % xmax, (p[1] + v[1]) % ymax)
+	pass
 
 
-def init_playfield(playfield: list, x: int = None, y: int = None):
-	"""if x,y not provided, only cleanup existing field,
-	else make new of provided dimensions
+def init_playfield(x: int, y: int):
+	"""make new field of provided dimensions
 	"""
 	pf = []
-	if x is not None and y is not None:
-		for yi in range(y):
-			pf.append(['.'] * x)
-	if x is None and y is None:
-		pass
+	for yi in range(y):
+		pf.append([0] * x)
 	return pf
+
+
+def clean_playfield(playfield: list):
+	"""cleanup existing field
+	"""
+	xn = range(len(playfield[0]))
+	for y in range(len(playfield)):
+		for x in xn:
+			playfield[y][x] = 0
+	pass
+
+
+def place_robots(robots: list, playfield: list):
+	for robot in robots:
+		pos = robot['p']
+		playfield[pos[1]][pos[0]] += 1
+	pass
 
 
 def visualize(playfield: list, output: bool = True):
 	field = ''
 	for line in playfield:
 		field += "\n" if field != '' else ''
-		field += ' '.join(line)
+		field += ' '.join(map(lambda x: str(x) if x > 0 else '.', line))
 
 	if output:
-		print('='*60) if output else None
+		print('=' * 60) if output else None
 		print(field)
-		print('='*60) if output else None
+		print('=' * 60) if output else None
 
 
 def solve_part_1(demo: int = 0) -> str:
@@ -77,15 +96,36 @@ def solve_part_1(demo: int = 0) -> str:
 	fl, fn = get_file(demo)
 	"""Do something here for PART 1 >>>"""
 
+	animate = demo > 0
+	sec = 100
+
+	if demo == 0:
+		xmax = 101
+		ymax = 103
+	else:
+		xmax = 11
+		ymax = 7
+
 	robots = parse_input(fl)
 	# ~ dump_list_of(robots)
 
-	playfield = []
-	playfield = init_playfield(playfield, 11, 7)
-	visualize(playfield)
+	playfield = init_playfield(xmax, ymax)
+	# ~ visualize(playfield)
+	place_robots(robots, playfield)
+	visualize(playfield) if animate else None
+	# ~ clean_playfield(playfield)
+	# ~ visualize(playfield)
+	# ~ exit()
 
-	for sec in range(100):
+	for sec in range(sec):
+		time.sleep(0.040) if animate else None
+		move_robots(robots, xmax, ymax)
+		clean_playfield(playfield)
+		place_robots(robots, playfield)
+		visualize(playfield) if animate else None
 
+	# ~ xmid = xmax // 2 + 1
+	# ~ ymid = ymax // 2 + 1
 
 	answer = None
 
@@ -111,13 +151,13 @@ def solve_part_2(demo: int = 0) -> str:
 
 def main():
 
-	solve_part_1(1)
+	# ~ solve_part_1(1)
 	expect1 = {
 		1: 12,
 		# ~ 2: None,
 		# ~ 0: None,
 	}
-	# ~ print(utils.test_answers(expect1, solve_part_1))
+	print(utils.test_answers(expect1, solve_part_1))
 
 	# ~ solve_part_2(1)
 	expect2 = {
